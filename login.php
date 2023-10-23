@@ -1,14 +1,7 @@
 
 <?php 
-    $servername = "localhost";
-    $username = "DBUSERNAME";
-    $password = "DBPASSWORD";
-    $dbname = "DBNAME";
-    
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'config.php';
+    $conn = dbConnect();
 
     session_start();
 
@@ -60,7 +53,7 @@
                 echo "Error: ".$sql."</br>".$conn->error;
             }
         }
-        $conn->close();
+        dbClose($conn);
     }
 ?>
 <!DOCTYPE html>
