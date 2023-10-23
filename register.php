@@ -1,58 +1,58 @@
 
 <?php 
-    include 'config.php';
+include("config.php");
 
-    session_start();
+session_start();
 
-    if (isset($_SESSION['username']) || $_SESSION['login']) {
-        header("location:/");
-        exit();
+if (isset($_SESSION['username']) || $_SESSION['login']) {
+    header("location:/");
+    exit();
+}
+
+$usernameErr = $passwordErr = $confirmErr = $successMsg = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($_POST['username'])) {
+        $usernameErr = "Username is required";
+    }
+    if (empty($_POST['password'])) {
+        $passwordErr = "password is required";
+    }
+    if (empty($_POST['confirm-password'])) {
+        $confirmErr = "password confirmation is required";
+    }
+    if ($_POST['password'] !== $_POST['confirm-password']) {
+        $confirmErr = "Passwords do not match";
     }
 
-    $usernameErr = $passwordErr = $confirmErr = $successMsg = "";
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (empty($_POST['username'])) {
-            $usernameErr = "Username is required";
-        }
-        if (empty($_POST['password'])) {
-            $passwordErr = "password is required";
-        }
-        if (empty($_POST['confirm-password'])) {
-            $confirmErr = "password confirmation is required";
-        }
-        if ($_POST['password'] !== $_POST['confirm-password']) {
-            $confirmErr = "Passwords do not match";
-        }
+    $username = htmlspecialchars($_POST['username']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $signupTimestamp = date('Y-m-d H:i:s');
+
+    $sqlCheckUsername = "SELECT * FROM users WHERE username = '$username'";
+
+    $sqlRegisterUser = "INSERT INTO users (username, password, sign_up_date) VALUES ('$username', '$password', '$signupTimestamp')";
 
 
-        $username = htmlspecialchars($_POST['username']);
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $signupTimestamp = date('Y-m-d H:i:s');
+    $usernameCheckResult = mysqli_query($conn, $sqlCheckUsername);
 
-        $sqlCheckUsername = "SELECT * FROM users WHERE username = '$username'";
-
-        $sqlRegisterUser = "INSERT INTO users (username, password, sign_up_date) VALUES ('$username', '$password', '$signupTimestamp')";
-
-
-        $usernameCheckResult = mysqli_query($conn, $sqlCheckUsername);
-
-        if (mysqli_num_rows($usernameCheckResult) > 0) {
-            $usernameErr = "This username is taken.";
+    if (mysqli_num_rows($usernameCheckResult) > 0) {
+        $usernameErr = "This username is taken.";
+    } else {
+        if ($conn->query($sqlRegisterUser) === TRUE) {
+            $successMsg = "Account created successfully!";
+            $_SESSION['login'] = true;
+            $_SESSION['username'] = $username;
+            sleep(1);
+            header("Location:/");
+            die();
         } else {
-            if ($conn->query($sqlRegisterUser) === TRUE) {
-                $successMsg = "Account created successfully!";
-                $_SESSION['login'] = true;
-                $_SESSION['username'] = $username;
-                sleep(1);
-                header("Location:/");
-                die();
-            } else {
-                echo "Error: ".$sql."</br>".$conn->error;
-            }
+            echo "Error: ".$sql."</br>".$conn->error;
         }
-        dbClose($conn);
     }
+    $conn->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

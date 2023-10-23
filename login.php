@@ -1,8 +1,6 @@
 
 <?php 
-    include 'config.php';
-    $conn = dbConnect();
-
+    include("config.php");
     session_start();
 
     if (isset($_SESSION['username']) || $_SESSION['login']) {
@@ -53,7 +51,7 @@
                 echo "Error: ".$sql."</br>".$conn->error;
             }
         }
-        dbClose($conn);
+        $conn->close();
     }
 ?>
 <!DOCTYPE html>
@@ -92,7 +90,7 @@
                 <a href="/">Home</a>
             </div>
             <div class="nav__auth">
-                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
             </div>
         </div>
     </nav>
