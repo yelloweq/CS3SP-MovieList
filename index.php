@@ -1,10 +1,7 @@
-<?php 
-    require __DIR__ . '/vendor/autoload.php';
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/');
-    $dotenv->load();
-    session_start();
-    include 'base.php';
-    $title = "MovieList - Home";
+<?php
+session_start();
+include 'base.php';
+$title = "MovieList - Home";
 ?>
 
     <div class="content">
