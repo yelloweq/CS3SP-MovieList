@@ -13,10 +13,10 @@ ob_start();
     <title><?php echo isset($title); ?></title>
 
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
-    <link rel="stylesheet" type="text/css" href="/node_modules/clippyjsreworked/assets/clippy.css" media="all">
+    <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
 </head>
-
-<body>
+<body style="background-color: #BFBFBF;">
+    
     <nav>
         <div class="navbar">
             <div class="title-bar">
