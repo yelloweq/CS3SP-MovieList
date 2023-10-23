@@ -33,7 +33,6 @@ ob_start();
                         <button aria-label="Help" onclick="window.location.href='logout.php'"></button>
                     <?php } ?>
                 </div>
-            </div>
         </div>
     </nav>
 </body>
