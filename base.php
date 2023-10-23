@@ -13,7 +13,7 @@ ob_start();
     <title><?php echo isset($title); ?></title>
 
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
-    <link rel="stylesheet" type="text/css" href="clippy.js/src/clippy.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/node_modules/clippyjsreworked/assets/clippy.css" media="all">
 </head>
 
 <body>
@@ -40,7 +40,7 @@ ob_start();
 <!-- Add these scripts to  the bottom of the page -->
 <script src="https://unpkg.com/jquery@3.2.1"></script>
  
-<script src="clippy.js/build/clippy.js"></script>
+<script src="node_modules/clippyjsreworked/dist/clippy.js"></script>
  
 <script type="text/javascript">
 
