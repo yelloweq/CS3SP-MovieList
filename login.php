@@ -90,7 +90,7 @@
                 <a href="/">Home</a>
             </div>
             <div class="nav__auth">
-                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
             </div>
         </div>
     </nav>
