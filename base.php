@@ -4,41 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo $title; ?></title>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/xp.css">
 </head>
-<style>
-    .navbar {
-        display:flex;
-        justify-content: space-between;
-    }
-
-    .nav__routes {
-        display: block;
-    }
-    .nav__auth {
-        display: flex;
-        justify-content: space-between;
-        width: 125px;
-    }
-    .nav__auth a {
-        display: block;
-        padding: 5 15 5 5;
-        text-decoration: none;
-    }
-    .content {
-        position: relative;
-        display: block;
-        margin: auto;
-        width: 80%;
-        text-align: center;
-    }
-    body {
-        min-height: 100vh;
-    }
-</style>
 <body>
     <nav>
         <div class="navbar">
-            <div class="nav__routes">
+            <div class="window" style="width:auto; height:20px">
                 <a href="movieList.php">MyMovieList</a>
             </div>
             <?php
