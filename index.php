@@ -1,7 +1,7 @@
 <?php 
     session_start();
-    $title = "MovieList - Home";
     include 'base.php';
+    $title = "MovieList - Home";
 ?>
 
     <div class="content">
