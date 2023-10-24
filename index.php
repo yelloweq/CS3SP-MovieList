@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'base.php';
 $title = "MovieList - Home";
 ?>

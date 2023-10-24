@@ -25,15 +25,16 @@
                 <div class="title-bar-controls">
                     <?php
                     if (isset($_SESSION['username'])) { ?>
-                        <button aria-label="Minimize" onclick="window.location.href='movieList.php'"></button>
-                        <button aria-label="Restore" onclick="window.location.href='index.php'"></button>
-                        <button aria-label="Close" onclick="window.location.href='login.php'"></button>
+                        <button aria-label="Minimize" onclick="window.location.href='index.php'"></button>
+                        <button aria-label="Restore" onclick="window.location.href='movieList.php'"></button>
+                        <button aria-label="Close" onclick="window.location.href='logout.php'"></button>
                     <?php } else { ?>
-                        <button aria-label="Minimize" onclick="window.location.href='movieList.php'"></button>
-                        <button aria-label="Restore" onclick="window.location.href='index.php'"></button>
+                        <button aria-label="Minimize" onclick="window.location.href='index.php'"></button>
+                        <button aria-label="Restore" onclick="window.location.href='login.php'"></button>
                         <button aria-label="Help" onclick="window.location.href='register.php'"></button>
                     <?php } ?>
                 </div>
         </div>
     </nav>
     <?php include("clippy.php"); ?>
+    
