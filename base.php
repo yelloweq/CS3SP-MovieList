@@ -1,4 +1,5 @@
 <?php ob_start();
+$title = isset($title) ? $title : "Moviebox";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($title); ?></title>
+    <title><?php if (isset($title)) { echo $title; } ?></title>
 
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
     <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
@@ -21,7 +22,7 @@
     <nav>
         <div class="navbar">
             <div class="title-bar">
-                <div class="title-bar-text"><?php echo isset($title); ?> </div>
+                <div class="title-bar-text"><?php if (isset($title)) { echo $title; } ?> </div>
                 <div class="title-bar-controls">
                     <?php
                     if (isset($_SESSION['username'])) { ?>

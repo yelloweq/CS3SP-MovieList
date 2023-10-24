@@ -1,11 +1,12 @@
 <?php 
+$title = "My Movies";
     include ('base.php');
     include('config.php');
 
-    if (! isset($_SESSION['username']) && ! $_SESSION['login']) {
-        header("location:/login.php");
-        exit();
-    }
+    // if (!isset($_SESSION['username']) || !isset($_SESSION['login']) || !$_SESSION['login']) {
+    //     header("location:/login.php");
+    //     exit();
+    // }
     $userID = getUserID();
 
     $sqlGetUserMovies = "SELECT m.title, m.released_at FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = '$userID'";
