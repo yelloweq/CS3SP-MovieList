@@ -1,7 +1,10 @@
 # CS3SP-MovieList
 
 ## Development
- 1. Ensure you have a correct database structure:
+1. git clone https://github.com/yelloweq/CS3SP-MovieList.git
+2. cd CS3SP-Movielist
+3. npm install
+4. Ensure you have a correct database structure:
 // structure sql file will be added soon
-2. Change db variables at the top of each file (might be adding .env file later with composer) to your dabase connection details
-3. Run your apache server
+5. enter details in .env file
+6. run apache server
