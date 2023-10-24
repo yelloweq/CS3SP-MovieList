@@ -1,10 +1,9 @@
-
-<?php 
+<?php session_start();
+ob_start();
 include("config.php");
+include("base.php");
 
-session_start();
-
-if (isset($_SESSION['username']) || $_SESSION['login']) {
+if (isset($_SESSION['username']) && $_SESSION['login']) {
     header("location:/");
     exit();
 }
@@ -48,68 +47,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location:/");
             die();
         } else {
-            echo "Error: ".$sql."</br>".$conn->error;
+            echo "Error: " . $sql . "</br>" . $conn->error;
         }
     }
     $conn->close();
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - MovieList</title>
-</head>
-<style>
-    .navbar {
-        display:flex;
-        justify-content: space-between;
-    }
 
-    .nav__routes {
-        display: block;
-    }
-    .nav__auth {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-    .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        justify-items: center;
-        vertical-align: middle;
-    }
-</style>
-<body>
-    <nav>
-        <div class="navbar">
-            <div class="nav__routes">
-                <a href="/">Home</a>
-            </div>
-            <div class="nav__auth">
-                <a href="login.php">Login</a>
-            </div>
-        </div>
-    </nav>
-    <div class="form">
-    <h2>Register</h2> 
+?>
+<style>
+.form label {
+  display: inline-block;
+  width: 100px;
+  margin-right: 10px;
+  text-align: right;
+}
+
+.form input[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 32px;
+  font-size: 14px;
+}
+  </style>
+<div style="width: 50%; margin: 0 auto;">
+    <h1 style="text-align: center;">Register</h1>
+<div style="width: 50%; margin: 0 auto;" class="form">
     <p>Create an account to create your personal movie list</p>
-        <form method="POST"> 
-            <label for="username">Username:</label><br> 
-            <input type="text" id="username" name="username"><br> 
-            <span class="error"><?php echo $usernameErr;?></span><br>
-            <label for="password">Password:</label><br> 
-            <input type="password" id="password" name="password"><br>
-            <span class="error"><?php echo $passwordErr;?></span><br>
-            <label for="confirm-password">Confirm password:</label><br> 
-            <input type="password" id="confirm-password" name="confirm-password"><br>
-            <span class="error"><?php echo $confirmErr;?></span><br>
-            <input type="submit" value="Submit"> 
-        </form>
-        <span class="error"><?php echo $successMsg;?></span><br>
-    </div>
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br>
+        <span class="error"><?php echo $usernameErr; ?></span><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <span class="error"><?php echo $passwordErr; ?></span><br>
+        <label for="confirm-password">Confirm password:</label>
+        <input type="password" id="confirm-password" name="confirm-password"><br>
+        <span class="error"><?php echo $confirmErr; ?></span><br>
+        <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
+    </form>
+    <span class="error"><?php echo $successMsg; ?></span><br>
+</div>
+</div>
 </body>
+
 </html>

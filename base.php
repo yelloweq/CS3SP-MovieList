@@ -1,11 +1,12 @@
-<?php
-ob_start();
+<?php ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php     header("Access-Control-Allow-Origin: *");
+<?php     
+    header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
+    header('Content-Type: text/html; charset=utf-8');
 ?>
 <head>
     <meta charset="UTF-8">
@@ -16,7 +17,7 @@ ob_start();
     <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
 </head>
 <body style="background-color: #BFBFBF;">
-    
+<div class="window" style="width: 50%; margin: 0 auto;">
     <nav>
         <div class="navbar">
             <div class="title-bar">
@@ -26,26 +27,13 @@ ob_start();
                     if (isset($_SESSION['username'])) { ?>
                         <button aria-label="Minimize" onclick="window.location.href='movieList.php'"></button>
                         <button aria-label="Restore" onclick="window.location.href='index.php'"></button>
-                        <button aria-label="Close" onclick="window.location.href='logout.php'"></button>
+                        <button aria-label="Close" onclick="window.location.href='login.php'"></button>
                     <?php } else { ?>
                         <button aria-label="Minimize" onclick="window.location.href='movieList.php'"></button>
                         <button aria-label="Restore" onclick="window.location.href='index.php'"></button>
-                        <button aria-label="Help" onclick="window.location.href='logout.php'"></button>
+                        <button aria-label="Help" onclick="window.location.href='register.php'"></button>
                     <?php } ?>
                 </div>
         </div>
     </nav>
-</body>
-<!-- Add these scripts to  the bottom of the page -->
-<script src="https://unpkg.com/jquery@3.2.1"></script>
- 
-<script src="node_modules/clippyjsreworked/dist/clippy.js"></script>
- 
-<script type="text/javascript">
-
-clippy.load('Bonzi', function(agent){
-    // Do anything with the loaded agent
-    agent.show();
-    agent.animate();
-});
-</script> 
+    <?php include("clippy.php"); ?>

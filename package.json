@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "clippyjsreworked": "^0.0.7"
+    "clippyjsreworked": "^0.0.7",
+    "dotenv": "^16.3.1"
   }
 }

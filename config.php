@@ -5,7 +5,6 @@ $dotenv->load();
 $conn = new mysqli($_ENV['HOST_NAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'],$_ENV['DB_NAME']) or die("Connect failed: %s\n". $conn -> error);
 
 function getUserID() {
-    session_start();
     global $conn;
 
     if (isset($_SESSION['username'])) {

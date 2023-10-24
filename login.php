@@ -1,16 +1,15 @@
-
-<?php 
+<?php ob_start();
+    include ('base.php');
     include("config.php");
-    session_start();
 
-    if (isset($_SESSION['username']) || $_SESSION['login']) {
+    if (isset($_SESSION['username']) && $_SESSION['login']) {
         header("location:/");
         exit();
     }
 
     $usernameErr = $passwordErr = $confirmErr = $successMsg = "";
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($_POST['username'])) {
             $usernameErr = "Username is required";
         }
@@ -40,57 +39,34 @@
         $conn->close();
     }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MovieList</title>
-</head>
 <style>
-    .navbar {
-        display:flex;
-        justify-content: space-between;
-    }
+.form label {
+  display: inline-block;
+  width: 100px;
+  margin-right: 10px;
+  text-align: right;
+}
 
-    .nav__routes {
-        display: block;
-    }
-    .nav__auth {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-    .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        justify-items: center;
-        vertical-align: middle;
-    }
-</style>
-<body>
-    <nav>
-        <div class="navbar">
-            <div class="nav__routes">
-                <a href="/">Home</a>
-            </div>
-            <div class="nav__auth">
-                <a href="register.php">Register</a>
-            </div>
-        </div>
-    </nav>
-    <div class="form">
-    <h2>Login</h2> 
+.form input[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 32px;
+  font-size: 14px;
+}
+  </style>
+  <div style="width: 50%; margin: 0 auto;">
+    <h1 style="text-align: center;">Login</h1>
+    <div style="width: 50%; margin: 0 auto;" class="form">
     <p>Login to view your personal movie list</p>
         <form method="POST"> 
-            <label for="username">Username:</label><br> 
+            <label for="username">Username:</label> 
             <input type="text" id="username" name="username"><br> 
             <span class="error"><?php echo $usernameErr;?></span><br>
-            <label for="password">Password:</label><br> 
+            <label for="password">Password:</label>
             <input type="password" id="password" name="password"><br>
             <span class="error"><?php echo $passwordErr;?></span><br>
-            <input type="submit" value="Submit"> 
+            <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
         </form>
         <span class="error"><?php echo $successMsg;?></span><br>
     </div>
