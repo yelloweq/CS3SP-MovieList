@@ -8,7 +8,7 @@ if (isset($_SESSION['username']) && $_SESSION['login']) {
     exit();
 }
 
-$usernameErr = $passwordErr = $confirmErr = $successMsg = "";
+$usernameErr = $passwordErr = $confirmErr = $successMsg = $loginErr = "";
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['username'])) {
@@ -20,13 +20,15 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
 
     $username = htmlspecialchars($_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $signupTimestamp = date('Y-m-d H:i:s');
+    $password = $_POST['password'];
 
-    $sqlRegisterUser = "INSERT INTO users (username, password, sign_up_date) VALUES ('$username', '$password', '$signupTimestamp')";
+    $sqlLoginUser = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
 
-    if ($conn->query($sqlRegisterUser) === TRUE) {
-        $successMsg = "Account created successfully!";
+    $loginUserResult = mysqli_query($conn, $sqlLoginUser);
+    $userData = mysqli_fetch_array($loginUserResult);
+
+;    if (mysqli_num_rows($loginUserResult) > 0 && password_verify($password, $userData["password"])) {
+        $successMsg = "Successfuly logged in!";
         session_start();
         $_SESSION['login'] = true;
         $_SESSION['username'] = $username;
@@ -34,7 +36,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         header("Location:/");
         die();
     } else {
-        echo "Error: " . $sql . "</br>" . $conn->error;
+        $loginErr = "The username or password is incorrect.";
     }
 
     $conn->close();
@@ -69,7 +71,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
             <span class="error"><?php echo $passwordErr; ?></span><br>
             <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
         </form>
-        <span class="error"><?php echo $successMsg; ?></span><br>
+        <span class="error"><?php echo $loginErr; ?></span><br>
+        <span class="success"><?php echo $successMsg; ?></span><br>
     </div>
     </body>
 
