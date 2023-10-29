@@ -55,27 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<style>
-.form label {
-  display: inline-block;
-  width: 100px;
-  margin-right: 10px;
-  text-align: right;
-}
-
-.form input[type="submit"] {
-  display: block;
-  margin: 0 auto;
-  width: 100px;
-  height: 32px;
-  font-size: 14px;
-}
-  </style>
-<div style="width: 50%; margin: 0 auto;">
-    <h1 style="text-align: center;">Register</h1>
-<div style="width: 50%; margin: 0 auto;" class="form">
+<h3 style="text-align: center;">Register</h3>
+    <div style="width:100%;display:flex;justify-items:center;flex-direction:column;text-align:center" class="form">
     <p>Create an account to create your personal movie list</p>
-    <form method="POST">
+    <form style="display:flex;flex-direction:column;margin: 0 30%" method="POST">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username"><br>
         <span class="error"><?php echo $usernameErr; ?></span><br>
@@ -88,8 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
     </form>
     <span class="error"><?php echo $successMsg; ?></span><br>
-</div>
+    </div>
 </div>
 </body>
-
 </html>
