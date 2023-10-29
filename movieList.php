@@ -11,6 +11,7 @@ $userID = getUserID();
 
 $sqlGetUserMovies = "SELECT m.title, m.released_at FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = '$userID'";
 $getUserMoviesResult = mysqli_query($conn, $sqlGetUserMovies);
+global $searchResult;
 
 $queryLengthErr = "";
 
@@ -80,7 +81,7 @@ $conn->close();
         </form>
 
         <?php 
-        if (mysqli_num_rows($searchResult) > 0) {
+        if ($searchResult && mysqli_num_rows($searchResult) > 0) {
             while ($row = mysqli_fetch_array($searchResult)) {
                 ?>
                 <div style="display: flex;align-items:center;justify-content:center;">
