@@ -1,40 +1,40 @@
 <?php 
 $title = "My Movies";
-    include ('base.php');
-    include('config.php');
+include('config.php');
+include ('base.php');
+    
+if (!isset($_SESSION['username'])) {
+    header("location:/login.php");
+    exit();
+}
+$userID = getUserID();
 
-    if (!isset($_SESSION['username'])) {
-        header("location:/login.php");
-        exit();
+$sqlGetUserMovies = "SELECT m.title, m.released_at FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = '$userID'";
+$getUserMoviesResult = mysqli_query($conn, $sqlGetUserMovies);
+
+$queryLengthErr = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['add'])) {
+    $movieID = $_POST['movie_id'];
+
+    $sqlAddMovie = "INSERT INTO user_movies (movie_id, user_id) VALUES ('$movieID', '$userID')";
+    if (mysqli_query($conn, $sqlAddMovie)) {
+        echo "Movie added to your list.";
+    } else {
+        echo "Error adding movie: " . mysqli_error($conn);
     }
-    $userID = getUserID();
-
-    $sqlGetUserMovies = "SELECT m.title, m.released_at FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = '$userID'";
-    $getUserMoviesResult = mysqli_query($conn, $sqlGetUserMovies);
-
-    $queryLengthErr = "";
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-       if (isset($_POST['add'])) {
-        $movieID = $_POST['movie_id'];
-
-        $sqlAddMovie = "INSERT INTO user_movies (movie_id, user_id) VALUES ('$movieID', '$userID')";
-        if (mysqli_query($conn, $sqlAddMovie)) {
-            echo "Movie added to your list.";
-        } else {
-            echo "Error adding movie: " . mysqli_error($conn);
-        }
-       } elseif (isset($_POST['query']) && strlen($_POST['query']) >= $_ENV['QUERY_MIN_LENGTH']) {
-            $query = $_POST['query'];
-            $query = htmlspecialchars($query);
-            $query = mysqli_real_escape_string($conn, $query);
-            $searchResult = mysqli_query($conn,"SELECT m.title, m.genre, m.released_at FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = $userID WHERE um.user_id IS NULL AND m.title LIKE '%" . $query . "%'") or die(mysqli_error($conn));
-        } else {
-            $queryLengthErr = "Please enter at least 3 characters";
-        }
+    } elseif (isset($_POST['query']) && strlen($_POST['query']) >= $_ENV['QUERY_MIN_LENGTH']) {
+        $query = $_POST['query'];
+        $query = htmlspecialchars($query);
+        $query = mysqli_real_escape_string($conn, $query);
+        $searchResult = mysqli_query($conn,"SELECT m.title, m.genre, m.released_at FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = $userID WHERE um.user_id IS NULL AND m.title LIKE '%" . $query . "%'") or die(mysqli_error($conn));
+    } else {
+        $queryLengthErr = "Please enter at least 3 characters";
     }
-    $conn->close();
+}
+$conn->close();
 ?>
 
     <div class="content">

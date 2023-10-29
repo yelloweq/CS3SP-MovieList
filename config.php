@@ -19,4 +19,42 @@ function getUserID() {
 
     return null;
 } 
+
+function getMovieByID($id) {
+    global $conn;
+
+
+    $query = "SELECT title, released_at FROM movies WHERE id = '$id'";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        return $row;
+    }
+    
+    return null;
+} 
+
+function getAllMovies() {
+    global $conn;
+
+    $query = "SELECT id, title, released_at FROM movies";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        return $result;
+    }
+
+    return null;
+} 
+
+function getReviewsForMovie($id) {
+    global $conn;
+
+    $query = "SELECT u.username, mr.review FROM movie_reviews mr LEFT JOIN users u ON mr.user_id = u.id where mr.movie_id = '$id' AND mr.user_id IS NOT NULL";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        return $result;
+    }
+
+    return null;
+}
 ?>

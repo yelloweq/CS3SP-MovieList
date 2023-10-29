@@ -17,6 +17,11 @@ $title = isset($title) ? $title : "Moviebox";
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
     <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
 </head>
+<style>
+    .content {
+        padding: 2% 5% 2% 5%;
+    }
+</style>
 <body style="background-color: #BFBFBF;min-height:100%; margin: 0">
 <div class="window" style="width: 80vw;min-height:100%;margin: 10px  auto;">
     <nav>
