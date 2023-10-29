@@ -109,4 +109,3 @@ function addReviewForMovie($movie_id, $review) {
     $query = "INSERT INTO movie_reviews (user_id, movie_id, review) VALUES ('$userID', '$movie_id', '$review')";
     return mysqli_query($conn, $query);
 }
-?>

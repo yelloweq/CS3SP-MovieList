@@ -8,4 +8,3 @@ if (ini_get("session.use_cookies")) {
     );
     header("location:/");
 }
-?>

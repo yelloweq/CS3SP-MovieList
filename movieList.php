@@ -76,7 +76,7 @@ $conn->close();
         while ($row = mysqli_fetch_array($searchResult)) {
     ?>
             <div style="display: flex;align-items:center;justify-content:center;">
-                <?php echo $row['title'] . ' ' . $row['genre'] . ' ' . $row['released_at'] . ' ' . $row['id']; ?>
+                <?php echo $row['title'] . ' ' . $row['genre'] . ' ' . $row['released_at']; ?>
 
                 <form method="post">
                     <?php echo '<input type="hidden" name="movie_id" value="' . $row['id'] . '">'; ?>
