@@ -9,21 +9,13 @@ include ('base.php');
 $movie = getMovieByID($_GET['id']);
 $reviews = getReviewsForMovie($_GET['id']);
 
-//add check if user already has a review for the movie & add edit review
-//functionality
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_SESSION['username']) && isset($_POST['user-review'])) {
         $userID = getUserID();
         $movieID = $_GET['id'];
-        $review = htmlspecialchars($_POST['user-review']);
-        $sqlAddReview = "INSERT INTO movie_reviews (user_id, movie_id, review) VALUES ('$userID', '$movieID', '$review')";
-        
-        if (mysqli_query($conn, $sqlAddReview)) {
-            echo "Review added successfuly";
-            header("Refresh:0");
-        } else {
-            echo "Error adding review: " . mysqli_error($conn);
-        }
+        $review = $_POST['user-review'];
+        addReviewForMovie($movieID, $review);
+        header('Refresh:0');
     }
 }
 ?>
@@ -36,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section>
     <h4>Reviews</h4>
     <?php
-    if (empty($reviews)) {
+    if (!$reviews) {
         echo "This movie does not have any reviews yet.";
     }
     while ($review = mysqli_fetch_array($reviews)) {
