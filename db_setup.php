@@ -4,7 +4,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'test';
+$dbname = 'coursework';
 
 // Connect to MySQL server
 $conn = mysqli_connect($host, $username, $password);
@@ -38,6 +38,7 @@ $sql_statements = array(
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         genre VARCHAR(255) NOT NULL,
+        synopsis TEXT,
         released_at YEAR(4) NOT NULL
     )CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci",
     "CREATE TABLE IF NOT EXISTS movie_reviews (
@@ -72,15 +73,15 @@ $sql_statements = array(
     ('Joe', '1234', 'joe@example.com'),
     ('James', '1234', 'james@example.com'
     )",
-    "INSERT INTO movies (title, genre, released_at) VALUES
-    ('The Shawshank Redemption', 'Drama', '1994'),
-    ('The Godfather', 'Crime', '1972'),
-    ('The Dark Knight', 'Action', '2008'
+    "INSERT INTO movies (title, genre, released_at, synopsis) VALUES
+    ('The Shawshank Redemption', 'Drama', '1994', 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.'),
+    ('The Godfather', 'Crime', '1972', 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.'),
+    ('The Dark Knight', 'Action', '2008', 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.'
     )",
-    "INSERT INTO movie_reviews (movie_id, user_id, review) VALUES
-    ('1', '1', 'wow!'),
-    ('1', '2', 'This is a bad movie!'),
-    ('1', '3', 'This is a great movie!'
+    "INSERT INTO movie_reviews (movie_id, user_id, review, rating) VALUES
+    ('1', '1', 'wow!', '3'),
+    ('1', '2', 'This is a bad movie!' , '1'),
+    ('1', '3', 'This is a great movie! ' , '5'
     )",
     "INSERT INTO user_movies (movie_id, user_id) VALUES
     ('1', '1'),
