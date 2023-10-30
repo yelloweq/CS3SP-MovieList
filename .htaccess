@@ -1,5 +1,7 @@
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^([^/.]+$ $1.php [L]
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/.]+)$ $1.php [L]
 
+DirectoryIndex index.php index.html
