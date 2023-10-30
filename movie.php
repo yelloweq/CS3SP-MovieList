@@ -21,10 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="content">
-    <?php
-    echo $movie['title'] . " " . $movie['released_at'] . " information";
-    ?>
-
+    <h2><?php echo $movie['title'] . ' - ' . $movie['released_at'] ?></h2>
+    <p><?php echo $movie['description'] ?></p>
     <section>
         <h4>Reviews</h4>
         <?php
@@ -32,16 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "This movie does not have any reviews yet.";
         }
         while ($review = mysqli_fetch_array($reviews)) {
-            echo $review['username'] . "'s review\n";
-            echo $review['review'] . "\n";
+            echo '<span class="username">' . $review['username'] . "'s review</span><br>";
+            echo '<span class="reviewtxt">' . $review['review'] . "</span><br>";
         }
         ?>
     </section>
     <form method="post">
-        <div class="field-row-stacked" style="width: 200px;">
-            <label for="user-review">Add a review</label>
+        <div class="field-row-stacked" style="width: 80%; text-align: center;">
+            <label for="user-review"  style="display: block;">Add a review</label>
             <textarea name="user-review" id="user-review" rows="8"></textarea>
+            <button <?php if (!isset($_SESSION['username'])) echo 'disabled' ?> type="submit" style="display: block; margin: 2% auto;">Post</button>    </form>
         </div>
-        <button <?php if (!isset($_SESSION['username'])) echo 'disabled' ?> type="submit">Post</button>
-    </form>
 </div>
