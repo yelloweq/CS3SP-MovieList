@@ -4,7 +4,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'coursework';
+$dbname = 'test';
 
 // Connect to MySQL server
 $conn = mysqli_connect($host, $username, $password);
@@ -33,31 +33,27 @@ $sql_statements = array(
         password VARCHAR(255) NOT NULL,
         email VARCHAR(50) UNIQUE,
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )",
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci",
     "CREATE TABLE IF NOT EXISTS movies (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         genre VARCHAR(255) NOT NULL,
         released_at YEAR(4) NOT NULL
-    )",
+    )CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci",
     "CREATE TABLE IF NOT EXISTS movie_reviews (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         movie_id INT(6) UNSIGNED NOT NULL,
         user_id INT(6) UNSIGNED NOT NULL,
         review TEXT,
         rating INT(1) NOT NULL,
-        FOREIGN KEY (movie_id) REFERENCES movies(id),
-        FOREIGN KEY (user_id) REFERENCES users(id),
         review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )",
+    )CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci",
     "CREATE TABLE IF NOT EXISTS user_movies (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         movie_id INT(6) UNSIGNED NOT NULL,
         user_id INT(6) UNSIGNED NOT NULL,
-        FOREIGN KEY (movie_id) REFERENCES movies(id),
-        FOREIGN KEY (user_id) REFERENCES users(id),
         date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )"
+    )CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"
 );
 
 // Loop over SQL statements and execute them
