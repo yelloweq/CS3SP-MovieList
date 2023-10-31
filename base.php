@@ -10,13 +10,13 @@ $title = isset($title) ? $title : "Moviebox";
     header('Content-Type: text/html; charset=utf-8');
 ?>
 <head>
-    <link rel="stylesheet" href="assets/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php if (isset($title)) { echo $title; } ?></title>
-    <link rel="stylesheet" href="assets/styles.css">
+
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
     <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <style>
     .content {
