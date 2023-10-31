@@ -24,7 +24,7 @@ function getMovieByID($id) {
     global $conn;
 
 
-    $query = "SELECT title, released_at FROM movies WHERE id = '$id'";
+    $query = "SELECT title, released_at, synopsis FROM movies WHERE id = '$id'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
@@ -33,6 +33,7 @@ function getMovieByID($id) {
     
     return null;
 } 
+
 
 function getAllMovies() {
     global $conn;
@@ -49,7 +50,7 @@ function getAllMovies() {
 function getReviewsForMovie($movie_id) {
     global $conn;
 
-    $query = "SELECT u.username, mr.review FROM movie_reviews mr LEFT JOIN users u ON mr.user_id = u.id where mr.movie_id = '$movie_id' AND mr.user_id IS NOT NULL";
+    $query = "SELECT u.username, mr.review, mr.review_date, rating FROM movie_reviews mr LEFT JOIN users u ON mr.user_id = u.id where mr.movie_id = '$movie_id' AND mr.user_id IS NOT NULL";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
         return $result;
@@ -101,11 +102,12 @@ function getUserMovies() {
     return mysqli_query($conn, $query);
 }
 
-function addReviewForMovie($movie_id, $review) {
+function addReviewForMovie($movie_id, $review, $rating) {
     global $conn;
 
     $userID = getUserID();
     $review = htmlspecialchars($review);
-    $query = "INSERT INTO movie_reviews (user_id, movie_id, review) VALUES ('$userID', '$movie_id', '$review')";
+    $rating = htmlspecialchars($rating);
+    $query = "INSERT INTO movie_reviews (user_id, movie_id, review, rating) VALUES ('$userID', '$movie_id', '$review', '$rating')";
     return mysqli_query($conn, $query);
 }
