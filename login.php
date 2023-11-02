@@ -19,21 +19,19 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     }
 
 
-    $username = htmlspecialchars($_POST['username']);
+    $username = $_POST['username'];
     $password = $_POST['password'];
+    $loginStatus = login($username, $password);
 
-    $sqlLoginUser = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-
-    $loginUserResult = mysqli_query($conn, $sqlLoginUser);
-    $userData = mysqli_fetch_array($loginUserResult);;
-    if (mysqli_num_rows($loginUserResult) > 0 && password_verify($password, $userData["password"])) {
-        $successMsg = "Successfuly logged in!";
-        session_start();
-        $_SESSION['login'] = true;
-        $_SESSION['username'] = $username;
-        sleep(1);
-        header("Location:/");
-        die();
+        if ($loginStatus === true) {
+            $successMsg = "Successfully logged in!";
+            session_start();
+            session_regenerate_id(true); // Regenerate session ID
+            $_SESSION['login'] = true;
+            $_SESSION['username'] = $username;
+            sleep(1);
+            header("Location:/");
+            die();
     } else {
         $loginErr = "The username or password is incorrect.";
     }

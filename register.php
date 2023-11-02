@@ -28,11 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = htmlspecialchars($_POST['username']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $signupTimestamp = date('Y-m-d H:i:s');
 
     $sqlCheckUsername = "SELECT * FROM users WHERE username = '$username'";
 
-    $sqlRegisterUser = "INSERT INTO users (username, password, sign_up_date) VALUES ('$username', '$password', '$signupTimestamp')";
+    $sqlRegisterUser = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
 
     $usernameCheckResult = mysqli_query($conn, $sqlCheckUsername);
