@@ -26,29 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    $username = htmlspecialchars($_POST['username']);
+    $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sqlCheckUsername = "SELECT * FROM users WHERE username = '$username'";
+    $registrationStatus = register($username, $password);
 
-    $sqlRegisterUser = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
-
-
-    $usernameCheckResult = mysqli_query($conn, $sqlCheckUsername);
-
-    if (mysqli_num_rows($usernameCheckResult) > 0) {
-        $usernameErr = "This username is taken.";
+    if ($registrationStatus === true) {
+        $successMsg = "Account created successfully!";
+        $_SESSION['login'] = true;
+        $_SESSION['username'] = $username;
+        sleep(1);
+        header("Location:/");
+        die();
     } else {
-        if ($conn->query($sqlRegisterUser) === TRUE) {
-            $successMsg = "Account created successfully!";
-            $_SESSION['login'] = true;
-            $_SESSION['username'] = $username;
-            sleep(1);
-            header("Location:/");
-            die();
-        } else {
-            echo "Error: " . $sql . "</br>" . $conn->error;
-        }
+        $usernameErr = "This username is taken.";
     }
     $conn->close();
 }

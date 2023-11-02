@@ -41,7 +41,27 @@ function login($username, $password) {
 
 function register($username, $password) 
 {
+    global $conn;
 
+    $stmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        return false; // Username already exists
+    }
+
+    $stmt->close();
+
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $username, $password);
+
+    if ($stmt->execute()) {
+        return true;
+    }
+
+    return false;
 }
 
 function getUserID()
