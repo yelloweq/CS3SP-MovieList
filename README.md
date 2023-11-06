@@ -7,5 +7,6 @@
 4. Ensure you have a correct database structure:
 // structure sql file will be added soon
 5. enter details in .env file
-6. php db_setup.php
-7. run apache server
+6. create and seed db:
+     php db_setup.php
+8. run apache server
