@@ -115,7 +115,7 @@ function getAllMovies()
 {
     global $conn;
 
-    $query = "SELECT id, title, released_at FROM movies";
+    $query = "SELECT id, title, released_at, genre, synopsis FROM movies";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
@@ -250,6 +250,40 @@ function addReviewForMovie($movie_id, $review, $rating)
 
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "iisi", $userID, $movie_id, $review, $rating);
+        $result = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function addMovie($title, $genre, $synopsis, $released_at)
+{  
+    global $conn;
+    $isAdmin = $_SESSION['username'] === 'admin';
+    $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $query);
+    if ($stmt && $isAdmin) {
+        mysqli_stmt_bind_param($stmt, "iisi", $userID, $movie_id, $review, $rating);
+        $result = mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function deleteMovie($movie_id)
+{
+    global $conn;
+
+    $isAdmin = $_SESSION['username'] === 'admin';
+    $query = "DELETE FROM movies WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt && $isAdmin) {
+        mysqli_stmt_bind_param($stmt, "i", $movie_id);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $result;
