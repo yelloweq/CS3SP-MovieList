@@ -19,7 +19,8 @@ if (isset($_SESSION['last_regeneration_time'])) {
     $_SESSION['last_regeneration_time'] = time();
 }
 
-function login($username, $password) {
+function login($username, $password)
+{
     global $conn;
 
     $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
@@ -39,7 +40,7 @@ function login($username, $password) {
     return false;
 }
 
-function register($username, $password) 
+function register($username, $password)
 {
     global $conn;
 
@@ -181,20 +182,23 @@ function addMovieToList($movie_id)
     $userID = getUserID();
 
     if (IsMovieInUsersList($movie_id)) {
-        echo "Movie is already in your list.";
-    }
+        echo '<script type="text/javascript">',
+        'alert("Movie is already in your list.");',
+        '</script>';
+    } else {
 
-    $query = "INSERT INTO user_movies (movie_id, user_id) VALUES (?, ?)";
-    $stmt = mysqli_prepare($conn, $query);
+        $query = "INSERT INTO user_movies (movie_id, user_id) VALUES (?, ?)";
+        $stmt = mysqli_prepare($conn, $query);
 
-    if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ii", $movie_id, $userID);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "ii", $movie_id, $userID);
 
-        if (!mysqli_stmt_execute($stmt)) {
-            echo "Error adding movie: " . $movie_id . " " . mysqli_error($conn);
+            if (!mysqli_stmt_execute($stmt)) {
+                echo "Error adding movie: " . $movie_id . " " . mysqli_error($conn);
+            }
+
+            mysqli_stmt_close($stmt);
         }
-
-        mysqli_stmt_close($stmt);
     }
 }
 
@@ -259,7 +263,7 @@ function addReviewForMovie($movie_id, $review, $rating)
 }
 
 function addMovie($title, $genre, $synopsis, $released_at)
-{  
+{
     global $conn;
     $isAdmin = $_SESSION['username'] === 'admin';
     $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
