@@ -208,7 +208,7 @@ function searchMovieByTitle($title)
 
     $userID = getUserID();
 
-    $query = "SELECT m.id, m.title, m.genre, m.released_at FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = ? WHERE m.title LIKE ?";
+    $query = "SELECT m.id, m.title, m.genre, m.released_at, m.synopsis FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = ? WHERE m.title LIKE ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
