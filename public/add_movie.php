@@ -1,6 +1,6 @@
 <?php
-include("config.php");
-include('base.php');
+include("../config.php");
+include('../base.php');
     // Check if the request method is POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Get the data sent via the POST request

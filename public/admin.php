@@ -1,8 +1,8 @@
 <?php 
 ob_start();
 $title = "Admin";
-include("config.php");
-include('base.php');
+include("../config.php");
+include('../base.php');
 
 // Check if user is logged in and is admin
 if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
