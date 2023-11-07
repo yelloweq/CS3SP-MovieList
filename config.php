@@ -202,6 +202,34 @@ function addMovieToList($movie_id)
     }
 }
 
+function delMovieFromList($movie_id)
+{
+    global $conn;
+
+    $userID = getUserID();
+
+    $query = "DELETE FROM user_movies WHERE user_id = ? AND movie_id = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ii", $userID, $movie_id);
+
+        if (!mysqli_stmt_execute($stmt)) {
+            echo "Error deleting movie: " . $movie_id . " " . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
+    }
+}
+
+
+
+
+
+
+
+
+
 function searchMovieByTitle($title)
 {
     global $conn;
@@ -229,7 +257,7 @@ function getUserMovies()
 
     $userID = getUserID();
 
-    $query = "SELECT m.title, m.released_at, m.synopsis FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = ?";
+    $query = "SELECT m.id, m.title, m.released_at, m.synopsis FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
@@ -269,7 +297,7 @@ function addMovie($title, $genre, $synopsis, $released_at)
     $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt && $isAdmin) {
-        mysqli_stmt_bind_param($stmt, "iisi", $userID, $movie_id, $review, $rating);
+        mysqli_stmt_bind_param($stmt, "iisi", $title, $genre, $synopsis, $released_at);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $result;
