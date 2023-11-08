@@ -1,8 +1,6 @@
-<!-- Add these scripts to  the bottom of the page -->
 <script src="https://unpkg.com/jquery@3.2.1"></script>
- 
 <script src="node_modules/clippyjsreworked/dist/clippy.js"></script>
- <script src="node_modules/clippyjsreworked/demo/demo.js"></script>
+<script src="node_modules/clippyjsreworked/demo/demo.js"></script>
  
 <!-- <script type="text/javascript">
 

@@ -19,6 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $movieID = $_POST['movie_id'];
         addMovieToList($movieID);
         header('Refresh:0');
+    } elseif (isset($_POST['delete'])) {
+        $movieID = $_POST['movie_id'];
+        delMovieFromList($movieID);
+        header('Refresh:0');
     } elseif (isset($_POST['query']) && strlen($_POST['query']) >= $_ENV['QUERY_MIN_LENGTH']) {
         $query = htmlspecialchars($_POST['query'], ENT_QUOTES, 'UTF-8');
         $searchResult = searchMovieByTitle($query);
@@ -43,8 +47,12 @@ $conn->close();
                 while ($row = mysqli_fetch_array($getUserMoviesResult)) {
                 ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></td> 
                         <td><?php echo htmlspecialchars($row['released_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><form method="POST">
+                    <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
+                    <input type="submit" name="delete" value="remove">
+                </form></td>
                     </tr>
                 <?php
                 }
@@ -85,7 +93,11 @@ $conn->close();
             echo "</tr>";
             echo "</table>";
 ?>
+<<<<<<< HEAD:movieList.php
+                <form method="POST">
+=======
                 <form method="post">
+>>>>>>> origin/phpcookhouse:public/movieList.php
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
                     <input type="submit" name="add" value="Add to List">
                 </form>
