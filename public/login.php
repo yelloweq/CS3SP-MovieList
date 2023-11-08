@@ -26,7 +26,6 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         if ($loginStatus === true) {
             $successMsg = "Successfully logged in!";
             session_start();
-            session_regenerate_id(true); // Regenerate session ID
             $_SESSION['login'] = true;
             $_SESSION['username'] = $username;
             sleep(1);
