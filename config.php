@@ -10,13 +10,10 @@ function login($username, $password)
 {
     global $conn;
 
-    $sql = ("SELECT password FROM users WHERE username = '$username");
+    $sql = ("SELECT username, password FROM users WHERE username = '$username' AND password = '$password'");
     $query = mysqli_query($conn, $sql);
     if ($user = mysqli_num_rows($query) > 0) {
-        $user = mysqli_fetch_assoc($query);
-        if ($password == $user['password']) {
             return true;
-        }
     }
 
     return false;
