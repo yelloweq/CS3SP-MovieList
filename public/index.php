@@ -10,9 +10,9 @@ $allMovies = getAllMovies();
 
     <?php
     while ($movie = mysqli_fetch_array($allMovies)) {
-        $movieId = htmlspecialchars($movie['id'], ENT_QUOTES, 'UTF-8');
-        $movieTitle = htmlspecialchars($movie['title'], ENT_QUOTES, 'UTF-8');
-        $releasedAt = htmlspecialchars($movie['released_at'], ENT_QUOTES, 'UTF-8');
+        $movieId = $movie['id'];
+        $movieTitle = $movie['title'];
+        $releasedAt = $movie['released_at'];
     ?>
         <a href="/movie.php?id=<?php echo $movieId; ?>">
             <?php echo $movieTitle . ' ' . $releasedAt . "\n"; ?>

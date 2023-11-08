@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         addMovieToList($movieID);
         header('Refresh:0');
     } elseif (isset($_POST['query']) && strlen($_POST['query']) >= $_ENV['QUERY_MIN_LENGTH']) {
-        $query = htmlspecialchars($_POST['query'], ENT_QUOTES, 'UTF-8');
+        $query = $_POST['query'];
         $searchResult = searchMovieByTitle($query);
     } else {
         $queryLengthErr = "Please enter at least . " . $_ENV['QUERY_MIN_LENGTH'] .  "characters";
@@ -43,8 +43,8 @@ $conn->close();
                 while ($row = mysqli_fetch_array($getUserMoviesResult)) {
                 ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></td>
-                        <td><?php echo htmlspecialchars($row['released_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo $row['title']; ?></td>
+                        <td><?php echo $row['released_at']; ?></td>
                     </tr>
                 <?php
                 }
@@ -64,7 +64,7 @@ $conn->close();
     <br>
     <h3>Search & Add movies to your list</h3>
     <br>
-    <?php echo htmlspecialchars($queryLengthErr, ENT_QUOTES, 'UTF-8'); ?>
+    <?php echo $queryLengthErr; ?>
     <form method="POST">
         <input type="text" name="query" placeholder="Search and add movies" />
         <input type="submit" value="Search">
@@ -86,7 +86,7 @@ $conn->close();
             echo "</table>";
 ?>
                 <form method="post">
-                    <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
+                    <?php echo '<input type="hidden" name="movie_id" value="' . $result['id'] . '">'; ?>
                     <input type="submit" name="add" value="Add to List">
                 </form>
             </div>

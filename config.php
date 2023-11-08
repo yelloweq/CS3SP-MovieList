@@ -143,9 +143,9 @@ function searchMovieByTitle($title)
     $user_id = getUserID();
     $search_title = "%" . $title . "%";
     $query = "SELECT m.id, m.title, m.genre, m.released_at, m.synopsis FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = '$user_id' WHERE m.title LIKE '$search_title'";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        return $result;
+    $data = mysqli_query($conn, $query);
+    if ($data) {
+        return $data;
     } else {
         return null;
     }

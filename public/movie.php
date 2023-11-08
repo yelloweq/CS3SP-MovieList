@@ -9,9 +9,9 @@ $reviews = getReviewsForMovie($_GET['id']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_SESSION['username']) && isset($_POST['user-review']) && isset($_POST['rating']) && isset($_GET['id'])) {
-        $movieID = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        $review = htmlspecialchars($_POST['user-review'], ENT_QUOTES, 'UTF-8');
-        $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT);
+        $movieID = $_GET['id'];
+        $review = $_POST['user-review'];
+        $rating = $_POST['$rating'];
         addReviewForMovie($movieID, $review, $rating);
         header('Refresh:0');
     }
@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "This movie does not have any reviews yet.";
         } else {
             while ($review = mysqli_fetch_array($reviews)) {
-                $username = htmlspecialchars($review['username'], ENT_QUOTES, 'UTF-8');
-                $rating = htmlspecialchars($review['rating'], ENT_QUOTES, 'UTF-8');
-                $review_date = htmlspecialchars($review['review_date'], ENT_QUOTES, 'UTF-8');
-                $review_text = htmlspecialchars($review['review'], ENT_QUOTES, 'UTF-8');
+                $username = $review['username'];
+                $rating = $review['rating'];
+                $review_date = $review['review_date'];
+                $review_text = $review['review'];
 
                 echo '<span class="username">' . $username . "'s review - Score:" . $rating . "</span> <br> Date Added:" . $review_date . "<br>";
                 echo '<span class="reviewtxt">' . $review_text . "</span><br>";
