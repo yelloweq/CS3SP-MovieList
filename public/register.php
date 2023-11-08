@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h3 style="text-align: center;">Register</h3>
     <div style="width:100%;display:flex;justify-items:center;flex-direction:column;text-align:center" class="form">
     <p>Create an account to create your personal movie list</p>
-    <form style="display:flex;flex-direction:column;margin: 0 30%" method="POST">
+    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="display:flex;flex-direction:column;margin: 0 30%" method="POST">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username"><br>
         <span class="error"><?php echo $usernameErr; ?></span><br>
@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="confirm-password">Confirm password:</label>
         <input type="password" id="confirm-password" name="confirm-password"><br>
         <span class="error"><?php echo $confirmErr; ?></span><br>
+        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
     </form>
     <span class="error"><?php echo $successMsg; ?></span><br>

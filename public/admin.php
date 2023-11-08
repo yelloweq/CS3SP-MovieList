@@ -4,17 +4,21 @@ $title = "Admin";
 include("../config.php");
 include('../base.php');
 
+$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
+
 // Check if user is logged in and is admin
 if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
 
      // Delete movie form
      if(isset($_POST['delete_movie'])) {
+        verifyToken($_POST['token']);
         $movie_id = $_POST['movie_id'];
         deleteMovie($movie_id);
         header("Refresh:0");
     }
 
     if(isset($_POST['add_movie'])) {
+        verifyToken($_POST['token']);
         $title = $_POST['title'];
         $genre = $_POST['genre'];
         $released_at = $_POST['released_at'];
@@ -40,8 +44,9 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
         echo "<td>" . $movie['released_at'] . "</td>";
         echo "<td>" . substr($movie['synopsis'], 0, 50) . "...</td>";
         echo "<td>";
-        echo "<form method='POST'>";
+        echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>";
         echo "<input type='hidden' name='movie_id' value='" . $movie['id'] . "'>";
+        echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
         echo "<input type='submit' name='delete_movie' value='Delete'>";
         echo "</form>";
         echo "</td>";
@@ -51,7 +56,7 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
 
         // Add movie form
         echo "<h2>Add Movie</h2>";
-        echo "<form method='POST'>";
+        echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>";
         echo "<input type='hidden' name='add_movie' value='Add'";
         echo "<label for='title'>Title:</label>";
         echo "<input type='text' name='title' id='title' required>";
@@ -65,6 +70,7 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
         echo "<label for='synopsis'>Synopsis:</label>";
         echo "<textarea name='synopsis' id='synopsis' required></textarea>";
         echo "<br>";
+        echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
         echo "<input type='submit' value='Add Movie'>";
         echo "</form>";
     

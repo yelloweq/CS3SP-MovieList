@@ -13,8 +13,10 @@ global $searchResult;
 
 $queryLengthErr = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 
+if ($request_method === 'POST') {
+    verifyToken($_POST['token']);
     if (isset($_POST['add'])) {
         $movieID = $_POST['movie_id'];
         addMovieToList($movieID);
@@ -49,8 +51,9 @@ $conn->close();
                     <tr>
                         <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></td> 
                         <td><?php echo htmlspecialchars($row['released_at'], ENT_QUOTES, 'UTF-8'); ?></td>
-                        <td><form method="POST">
+                        <td><form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
                     <input type="submit" name="delete" value="remove">
                 </form></td>
                     </tr>
@@ -73,8 +76,9 @@ $conn->close();
     <h3>Search & Add movies to your list</h3>
     <br>
     <?php echo htmlspecialchars($queryLengthErr, ENT_QUOTES, 'UTF-8'); ?>
-    <form method="POST">
+    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
         <input type="text" name="query" placeholder="Search and add movies" />
+        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
         <input type="submit" value="Search">
     </form>
     <?php
@@ -93,12 +97,9 @@ $conn->close();
             echo "</tr>";
             echo "</table>";
 ?>
-<<<<<<< HEAD:movieList.php
-                <form method="POST">
-=======
-                <form method="post">
->>>>>>> origin/phpcookhouse:public/movieList.php
+                <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
                     <input type="submit" name="add" value="Add to List">
                 </form>
             </div>
@@ -121,8 +122,9 @@ $conn->close();
             echo "<td>" . $movie['released_at'] . "</td>";
             echo "<td>" . substr($movie['synopsis'], 0, 50) . "...</td>";
             echo "<td>";
-            echo "<form method='POST'>";
+            echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>";
             echo "<input type='hidden' name='movie_id' value='" . $movie['id'] . "'>";
+            echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
             echo "<input type='submit' name='add' value='Add to list'>";
             echo "</form>";
             echo "</td>";

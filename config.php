@@ -7,6 +7,11 @@ $regenerationInterval = 1800; // every 30 min
 
 session_start();
 
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(35));    
+}
+
+
 //refresh session id to prevent fixation attacks
 if (isset($_SESSION['last_regeneration_time'])) {
     $currentTime = time();
@@ -17,6 +22,22 @@ if (isset($_SESSION['last_regeneration_time'])) {
     }
 } else {
     $_SESSION['last_regeneration_time'] = time();
+}
+
+function generateToken() {
+    $_SESSION['token'] = bin2hex(random_bytes(35));
+}
+
+function verifyToken($post_token) {
+    $token = htmlspecialchars($post_token);
+
+    if ($token !== $_SESSION['token']) {
+        // show an error message
+        echo '<p class="error">Error: invalid form submission</p>';
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
 }
 
 function login($username, $password)
@@ -33,6 +54,7 @@ function login($username, $password)
         $stmt->fetch();
 
         if (password_verify($password, $fetchedPassword)) {
+            generateToken();
             return true;
         }
     }
@@ -59,6 +81,7 @@ function register($username, $password)
     $stmt->bind_param("ss", $username, $password);
 
     if ($stmt->execute()) {
+        generateToken();
         return true;
     }
 
