@@ -164,7 +164,7 @@ $sql_statements = array(
     (27, 27, 'A powerful documentary.',4),
     (28, 28, 'Eye-opening and informative.',5),
     (29, 29, 'The best horror film I\'ve seen.',3),
-    (30, 30, 'Blade Runner(1982) is epic and a forever cultural reference. Blade Runner 2049(2017) is a disaster that should be wiped from human memory. Also, Deckard is not a replicant.',5)",
+    (30, 30, 'Blade Runner(1982) is epic and a forever cultural reference for its visual brilliance, deep themes, and iconic characters. Blade Runner 2049(2017) is a disaster that should be wiped from human memory because it fell short of its predecessor, with pacing issues and lack of originality. Also, Deckard is not a replicant.',5)",
 
     "INSERT INTO user_movies (movie_id, user_id) VALUES
     ('1', '1'),
