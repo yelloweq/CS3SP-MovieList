@@ -7,6 +7,11 @@ $regenerationInterval = 1800; // every 30 min
 
 session_start();
 
+if (empty($_SESSION['CSRF'])) {
+    $_SESSION['CSRF'] = bin2hex(random_bytes(35));    
+}
+
+
 //refresh session id to prevent fixation attacks
 if (isset($_SESSION['last_regeneration_time'])) {
     $currentTime = time();
@@ -19,7 +24,24 @@ if (isset($_SESSION['last_regeneration_time'])) {
     $_SESSION['last_regeneration_time'] = time();
 }
 
-function login($username, $password) {
+function generateCSRF() {
+    $_SESSION['CSRF'] = bin2hex(random_bytes(35));
+}
+
+function verifyCSRF($post_CSRF) {
+    $CSRF = htmlspecialchars($post_CSRF);
+
+    if ($CSRF !== $_SESSION['CSRF']) {
+        // show an error message
+        echo '<p class="error">Error: invalid form submission</p>';
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        exit;
+    }
+}
+
+function login($username, $password)
+{
     global $conn;
 
     $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
@@ -32,6 +54,7 @@ function login($username, $password) {
         $stmt->fetch();
 
         if (password_verify($password, $fetchedPassword)) {
+            generateCSRF();
             return true;
         }
     }
@@ -39,7 +62,7 @@ function login($username, $password) {
     return false;
 }
 
-function register($username, $password) 
+function register($username, $password)
 {
     global $conn;
 
@@ -58,6 +81,7 @@ function register($username, $password)
     $stmt->bind_param("ss", $username, $password);
 
     if ($stmt->execute()) {
+        generateCSRF();
         return true;
     }
 
@@ -181,22 +205,51 @@ function addMovieToList($movie_id)
     $userID = getUserID();
 
     if (IsMovieInUsersList($movie_id)) {
-        echo "Movie is already in your list.";
-    }
+        echo '<script type="text/javascript">',
+        'alert("Movie is already in your list.");',
+        '</script>';
+    } else {
 
-    $query = "INSERT INTO user_movies (movie_id, user_id) VALUES (?, ?)";
+        $query = "INSERT INTO user_movies (movie_id, user_id) VALUES (?, ?)";
+        $stmt = mysqli_prepare($conn, $query);
+
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "ii", $movie_id, $userID);
+
+            if (!mysqli_stmt_execute($stmt)) {
+                echo "Error adding movie: " . $movie_id . " " . mysqli_error($conn);
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+    }
+}
+
+function delMovieFromList($movie_id)
+{
+    global $conn;
+
+    $userID = getUserID();
+
+    $query = "DELETE FROM user_movies WHERE user_id = ? AND movie_id = ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ii", $movie_id, $userID);
+        mysqli_stmt_bind_param($stmt, "ii", $userID, $movie_id);
 
         if (!mysqli_stmt_execute($stmt)) {
-            echo "Error adding movie: " . $movie_id . " " . mysqli_error($conn);
+            echo "Error deleting movie: " . $movie_id . " " . mysqli_error($conn);
         }
-
-        mysqli_stmt_close($stmt);
     }
 }
+
+
+
+
+
+
+
+
 
 function searchMovieByTitle($title)
 {
@@ -204,7 +257,7 @@ function searchMovieByTitle($title)
 
     $userID = getUserID();
 
-    $query = "SELECT m.id, m.title, m.genre, m.released_at FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = ? WHERE um.user_id IS NULL AND m.title LIKE ?";
+    $query = "SELECT m.id, m.title, m.genre, m.released_at, m.synopsis FROM movies m LEFT JOIN user_movies um ON m.id = um.movie_id AND um.user_id = ? WHERE m.title LIKE ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
@@ -225,7 +278,7 @@ function getUserMovies()
 
     $userID = getUserID();
 
-    $query = "SELECT m.title, m.released_at FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = ?";
+    $query = "SELECT m.id, m.title, m.released_at, m.synopsis FROM movies m JOIN user_movies um ON m.id = um.movie_id WHERE um.user_id = ?";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
@@ -259,13 +312,13 @@ function addReviewForMovie($movie_id, $review, $rating)
 }
 
 function addMovie($title, $genre, $synopsis, $released_at)
-{  
+{
     global $conn;
     $isAdmin = $_SESSION['username'] === 'admin';
     $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt && $isAdmin) {
-        mysqli_stmt_bind_param($stmt, "iisi", $userID, $movie_id, $review, $rating);
+        mysqli_stmt_bind_param($stmt, "sssi", $title, $genre, $synopsis, $released_at);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $result;

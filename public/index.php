@@ -1,7 +1,7 @@
 <?php
 $title = "Home";
-include 'config.php';
-include 'base.php';
+include '../config.php';
+include '../base.php';
 $allMovies = getAllMovies();
 ?>
 <div class="content">
