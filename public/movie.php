@@ -1,8 +1,8 @@
 <?php
-include('config.php');
+include('../config.php');
 $movie = getMovieByID($_GET['id']);
 $title = $movie['title'];
-include('base.php');
+include('../base.php');
 
 $movie = getMovieByID($_GET['id']);
 $reviews = getReviewsForMovie($_GET['id']);

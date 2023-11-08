@@ -1,7 +1,7 @@
 <?php
 $title = "My Movies";
-include('config.php');
-include('base.php');
+include('../config.php');
+include('../base.php');
 
 if (!isset($_SESSION['username'])) {
     header("location:/login.php");
@@ -93,7 +93,11 @@ $conn->close();
             echo "</tr>";
             echo "</table>";
 ?>
+<<<<<<< HEAD:movieList.php
                 <form method="POST">
+=======
+                <form method="post">
+>>>>>>> origin/phpcookhouse:public/movieList.php
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
                     <input type="submit" name="add" value="Add to List">
                 </form>

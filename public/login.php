@@ -1,7 +1,7 @@
 <?php ob_start();
 $title = "Login";
-include("config.php");
-include('base.php');
+include("../config.php");
+include('../base.php');
 
 if (isset($_SESSION['username']) && $_SESSION['login']) {
     header("location:/");

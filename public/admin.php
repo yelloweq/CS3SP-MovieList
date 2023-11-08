@@ -1,8 +1,8 @@
 <?php 
 ob_start();
 $title = "Admin";
-include("config.php");
-include('base.php');
+include("../config.php");
+include('../base.php');
 
 // Check if user is logged in and is admin
 if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
@@ -11,6 +11,18 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
      if(isset($_POST['delete_movie'])) {
         $movie_id = $_POST['movie_id'];
         deleteMovie($movie_id);
+        header("Refresh:0");
+    }
+
+    if(isset($_POST['add_movie'])) {
+        $title = $_POST['title'];
+        $genre = $_POST['genre'];
+        $released_at = $_POST['released_at'];
+        $synopsis = $_POST['synopsis'];
+
+        addMovie($title, $genre, $synopsis, $released_at);
+
+        header("Refresh:0");
     }
 ?>
 <div style="padding:20px">
@@ -39,7 +51,8 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
 
         // Add movie form
         echo "<h2>Add Movie</h2>";
-        echo "<form method='POST' action='add_movie.php'>";
+        echo "<form method='POST'>";
+        echo "<input type='hidden' name='add_movie' value='Add'";
         echo "<label for='title'>Title:</label>";
         echo "<input type='text' name='title' id='title' required>";
         echo "<br>";

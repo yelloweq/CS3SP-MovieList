@@ -217,8 +217,6 @@ function delMovieFromList($movie_id)
         if (!mysqli_stmt_execute($stmt)) {
             echo "Error deleting movie: " . $movie_id . " " . mysqli_error($conn);
         }
-
-        mysqli_stmt_close($stmt);
     }
 }
 
@@ -297,7 +295,7 @@ function addMovie($title, $genre, $synopsis, $released_at)
     $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt && $isAdmin) {
-        mysqli_stmt_bind_param($stmt, "iisi", $title, $genre, $synopsis, $released_at);
+        mysqli_stmt_bind_param($stmt, "sssi", $title, $genre, $synopsis, $released_at);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $result;
