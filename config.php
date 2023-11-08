@@ -12,7 +12,7 @@ function login($username, $password)
 
     $sql = ("SELECT username, password FROM users WHERE username = '$username' AND password = '$password'");
     $query = mysqli_query($conn, $sql);
-    if ($user = mysqli_num_rows($query) > 0) {
+    if (mysqli_num_rows($query) > 0) {
             return true;
     }
 
