@@ -269,7 +269,7 @@ function addMovie($title, $genre, $synopsis, $released_at)
     $query = "INSERT INTO movies (title, genre, synopsis, released_at) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt && $isAdmin) {
-        mysqli_stmt_bind_param($stmt, "iisi", $userID, $movie_id, $review, $rating);
+        mysqli_stmt_bind_param($stmt, "sssi", $title, $genre, $synopsis, $released_at);
         $result = mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return $result;
