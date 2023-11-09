@@ -19,7 +19,7 @@ if ($request_method === 'POST') {
         $passwordErr = "password is required";
     }
 
-    verifyToken($_POST['token']);
+    verifyCSRF($_POST['CSRF']);
 
 
     $username = $_POST['username'];
@@ -52,7 +52,7 @@ if ($request_method === 'POST') {
         <label for="password">Password:</label>
         <input type="password" id="password" name="password"><br>
         <span class="error"><?php echo $passwordErr; ?></span><br>
-        <input type="hidden" id="token" name="token" value="<?php echo $_SESSION['token']; ?>">
+        <input type="hidden" id="CSRF" name="CSRF" value="<?php echo $_SESSION['CSRF']; ?>">
         <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
     </form>
     <span class="error"><?php echo $loginErr; ?></span><br>

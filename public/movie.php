@@ -14,7 +14,7 @@ if ($request_method === 'POST') {
         $movieID = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $review = htmlspecialchars($_POST['user-review'], ENT_QUOTES, 'UTF-8');
         $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT);
-        verifyToken($_POST['token']);
+        verifyCSRF($_POST['CSRF']);
         addReviewForMovie($movieID, $review, $rating);
         header('Refresh:0');
     }
@@ -53,7 +53,7 @@ if ($request_method === 'POST') {
                 <p>Rating: <span id="ratingValue">3</span></p>
                 
             </div>
-            <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+            <input type="hidden" name="CSRF" value="<?php echo $_SESSION['CSRF']; ?>">
             <button <?php if (!isset($_SESSION['username'])) echo 'disabled' ?> type="submit" style="display: block; margin: 2% auto;">Post</button>
         </form>
     </div>

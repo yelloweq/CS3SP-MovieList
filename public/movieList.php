@@ -16,7 +16,7 @@ $queryLengthErr = "";
 $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 
 if ($request_method === 'POST') {
-    verifyToken($_POST['token']);
+    verifyCSRF($_POST['CSRF']);
     if (isset($_POST['add'])) {
         $movieID = $_POST['movie_id'];
         addMovieToList($movieID);
@@ -53,7 +53,7 @@ $conn->close();
                         <td><?php echo htmlspecialchars($row['released_at'], ENT_QUOTES, 'UTF-8'); ?></td>
                         <td><form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
+                    <input type="hidden" name="CSRF" value="<?= $_SESSION['CSRF'] ?? '' ?>">
                     <input type="submit" name="delete" value="remove">
                 </form></td>
                     </tr>
@@ -78,7 +78,7 @@ $conn->close();
     <?php echo htmlspecialchars($queryLengthErr, ENT_QUOTES, 'UTF-8'); ?>
     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
         <input type="text" name="query" placeholder="Search and add movies" />
-        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
+        <input type="hidden" name="CSRF" value="<?= $_SESSION['CSRF'] ?? '' ?>">
         <input type="submit" value="Search">
     </form>
     <?php
@@ -99,7 +99,7 @@ $conn->close();
 ?>
                 <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                     <?php echo '<input type="hidden" name="movie_id" value="' . htmlspecialchars($result['id'], ENT_QUOTES, 'UTF-8') . '">'; ?>
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?? '' ?>">
+                    <input type="hidden" name="CSRF" value="<?= $_SESSION['CSRF'] ?? '' ?>">
                     <input type="submit" name="add" value="Add to List">
                 </form>
             </div>
@@ -124,7 +124,7 @@ $conn->close();
             echo "<td>";
             echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>";
             echo "<input type='hidden' name='movie_id' value='" . $movie['id'] . "'>";
-            echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
+            echo '<input type="hidden" name="CSRF" value="' . $_SESSION['CSRF'] . '">';
             echo "<input type='submit' name='add' value='Add to list'>";
             echo "</form>";
             echo "</td>";

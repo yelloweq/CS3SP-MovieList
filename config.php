@@ -7,8 +7,8 @@ $regenerationInterval = 1800; // every 30 min
 
 session_start();
 
-if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(35));    
+if (empty($_SESSION['CSRF'])) {
+    $_SESSION['CSRF'] = bin2hex(random_bytes(35));    
 }
 
 
@@ -24,14 +24,14 @@ if (isset($_SESSION['last_regeneration_time'])) {
     $_SESSION['last_regeneration_time'] = time();
 }
 
-function generateToken() {
-    $_SESSION['token'] = bin2hex(random_bytes(35));
+function generateCSRF() {
+    $_SESSION['CSRF'] = bin2hex(random_bytes(35));
 }
 
-function verifyToken($post_token) {
-    $token = htmlspecialchars($post_token);
+function verifyCSRF($post_CSRF) {
+    $CSRF = htmlspecialchars($post_CSRF);
 
-    if ($token !== $_SESSION['token']) {
+    if ($CSRF !== $_SESSION['CSRF']) {
         // show an error message
         echo '<p class="error">Error: invalid form submission</p>';
         // return 405 http status code
@@ -54,7 +54,7 @@ function login($username, $password)
         $stmt->fetch();
 
         if (password_verify($password, $fetchedPassword)) {
-            generateToken();
+            generateCSRF();
             return true;
         }
     }
@@ -81,7 +81,7 @@ function register($username, $password)
     $stmt->bind_param("ss", $username, $password);
 
     if ($stmt->execute()) {
-        generateToken();
+        generateCSRF();
         return true;
     }
 

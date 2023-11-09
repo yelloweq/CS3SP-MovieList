@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="confirm-password">Confirm password:</label>
         <input type="password" id="confirm-password" name="confirm-password"><br>
         <span class="error"><?php echo $confirmErr; ?></span><br>
-        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+        <input type="hidden" name="CSRF" value="<?= $_SESSION['CSRF'] ?>">
         <input style=" display: block; margin: 0 auto;" type="submit" value="Submit">
     </form>
     <span class="error"><?php echo $successMsg; ?></span><br>

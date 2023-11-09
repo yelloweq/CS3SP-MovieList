@@ -11,14 +11,14 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
 
      // Delete movie form
      if(isset($_POST['delete_movie'])) {
-        verifyToken($_POST['token']);
+        verifyCSRF($_POST['CSRF']);
         $movie_id = $_POST['movie_id'];
         deleteMovie($movie_id);
         header("Refresh:0");
     }
 
     if(isset($_POST['add_movie'])) {
-        verifyToken($_POST['token']);
+        verifyCSRF($_POST['CSRF']);
         $title = $_POST['title'];
         $genre = $_POST['genre'];
         $released_at = $_POST['released_at'];
@@ -46,7 +46,7 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
         echo "<td>";
         echo "<form action='" . htmlspecialchars($_SERVER['PHP_SELF']) . "' method='POST'>";
         echo "<input type='hidden' name='movie_id' value='" . $movie['id'] . "'>";
-        echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
+        echo '<input type="hidden" name="CSRF" value="' . $_SESSION['CSRF'] . '">';
         echo "<input type='submit' name='delete_movie' value='Delete'>";
         echo "</form>";
         echo "</td>";
@@ -70,7 +70,7 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
         echo "<label for='synopsis'>Synopsis:</label>";
         echo "<textarea name='synopsis' id='synopsis' required></textarea>";
         echo "<br>";
-        echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
+        echo '<input type="hidden" name="CSRF" value="' . $_SESSION['CSRF'] . '">';
         echo "<input type='submit' value='Add Movie'>";
         echo "</form>";
     
