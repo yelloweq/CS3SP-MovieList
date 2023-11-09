@@ -4,10 +4,12 @@ $title = isset($title) ? $title : "Moviebox";
 <!DOCTYPE html>
 <html lang="en">
 <?php     
-    header("Access-Control-Allow-Origin: *");
+    header('Access-Control-Allow-Origin: http://localhost:80');
     header("Access-Control-Allow-Methods: GET, POST");
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
+    header('Access-Control-Allow-Credentials: true');
     header('Content-Type: text/html; charset=utf-8');
+
 ?>
 <head>
     <meta charset="UTF-8">
