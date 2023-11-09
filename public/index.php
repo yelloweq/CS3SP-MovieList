@@ -21,3 +21,4 @@ $allMovies = getAllMovies();
     }
     ?>
 </div>
+</html>

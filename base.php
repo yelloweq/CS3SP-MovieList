@@ -1,4 +1,4 @@
-<?php ob_start();
+<?php
 $title = isset($title) ? $title : "Moviebox";
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,6 @@ $title = isset($title) ? $title : "Moviebox";
     <title><?php if (isset($title)) { echo $title; } ?></title>
 
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
-    <link rel="stylesheet" type="text/css" href="assets/clippy.css" media="all">
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <style>
@@ -32,13 +31,13 @@ $title = isset($title) ? $title : "Moviebox";
                 <div class="title-bar-controls">
                     <?php
                     if (isset($_SESSION['username'])) { ?>
-                        <button aria-label="Minimize" onclick="window.location.href='index'" title="Click to Minimize"></button>
-                        <button aria-label="Restore" onclick="window.location.href='movieList'" title="Go to your MovieList"></button>
-                        <button aria-label="Close" onclick="window.location.href='logout'" title="Logout"></button>
+                        <button aria-label="Minimize" onclick="window.location.href='index.php'" title="Click to Minimize"></button>
+                        <button aria-label="Restore" onclick="window.location.href='movieList.php'" title="Go to your MovieList"></button>
+                        <button aria-label="Close" onclick="window.location.href='logout.php'" title="Logout"></button>
                     <?php } else { ?>
-                        <button aria-label="Minimize" onclick="window.location.href='index'" title="Click to Minimize"></button>
-                        <button aria-label="Restore" onclick="window.location.href='login'" title="Click to Login"></button>
-                        <button aria-label="Help" onclick="window.location.href='register'" title="Click to Register"></button>
+                        <button aria-label="Minimize" onclick="window.location.href='index.php'" title="Click to Minimize"></button>
+                        <button aria-label="Restore" onclick="window.location.href='login.php'" title="Click to Login"></button>
+                        <button aria-label="Help" onclick="window.location.href='register.php'" title="Click to Register"></button>
                     <?php } ?>
                 </div>
         </div>

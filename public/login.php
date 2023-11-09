@@ -1,4 +1,4 @@
-<?php ob_start();
+<?php 
 $title = "Login";
 include("../config.php");
 include('../base.php');

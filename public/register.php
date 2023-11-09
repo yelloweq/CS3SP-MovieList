@@ -1,5 +1,4 @@
 <?php 
-ob_start();
 include("../config.php");
 $title = "Sign up";
 include("../base.php");

@@ -1,5 +1,4 @@
 <?php 
-ob_start();
 $title = "Admin";
 include("../config.php");
 include('../base.php');
@@ -81,3 +80,4 @@ if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
 }
 ?>
 </div>
+</html>

@@ -64,3 +64,4 @@ if ($request_method === 'POST') {
         document.getElementById('ratingValue').textContent = val;
     }
 </script>
+</html>
