@@ -100,7 +100,7 @@ $sql_statements = array(
     ('Paul', 'password24', 'paul@example.com'),
     ('Diana', 'password25', 'diana@example.com'),
     ('George', 'password26', 'george@example.com'),
-    ('Steven', 'password27', 'steven@example.com')",
+    ('Victor', 'password27', 'VictorJesus@example.com')",
 
     "INSERT INTO movies (title, genre, released_at, synopsis) VALUES
     ('The Shawshank Redemption', 'Drama', '1994', 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.'),
@@ -132,7 +132,7 @@ $sql_statements = array(
     ('The Incredibles', 'Animation', '2004', 'A family of undercover superheroes, while trying to live the quiet suburban life, are forced into action to save the world.'),
     ('E.T. the Extra-Terrestrial', 'Science Fiction', '1982', 'A troubled child summons the courage to help a friendly alien escape Earth and return to his home world.'),
     ('Titanic', 'Drama', '1997', 'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.'),
-    ('Harry Potter and the Sorcerer\'s Stone', 'Fantasy', '2001', 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.')",
+    ('Blade Runner', 'Drama/Sci-fi', '1982', 'A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.')",
 
     "INSERT INTO movie_reviews (movie_id, user_id, review, rating) VALUES
     (1, 1, 'Fantastic film!',5),
@@ -164,7 +164,7 @@ $sql_statements = array(
     (27, 27, 'A powerful documentary.',4),
     (28, 28, 'Eye-opening and informative.',5),
     (29, 29, 'The best horror film I\'ve seen.',3),
-    (30, 30, 'I couldn\'t sleep after watching it.',5)",
+    (30, 30, 'Blade Runner(1982) is epic and a forever cultural reference for its visual brilliance, deep themes, and iconic characters. Blade Runner 2049(2017) is a disaster that should be wiped from human memory because it fell short of its predecessor, with pacing issues and lack of originality. Also, Deckard is not a replicant.',5)",
 
     "INSERT INTO user_movies (movie_id, user_id) VALUES
     ('1', '1'),
