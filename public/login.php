@@ -33,6 +33,10 @@ if ($request_method === 'POST') {
             $_SESSION['login'] = true;
             $_SESSION['username'] = $username;
             sleep(1);
+            if ($username === 'admin') {
+                header("Location:/admin.php");
+                die();
+            }
             header("Location:/");
             die();
     } else {
