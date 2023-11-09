@@ -5,7 +5,7 @@ $title = isset($title) ? $title : "Moviebox";
 <html lang="en">
 <?php     
     header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Methods: GET, POST");
     header("Access-Control-Allow-Headers: Content-Type, Authorization");
     header('Content-Type: text/html; charset=utf-8');
 ?>
@@ -42,6 +42,5 @@ $title = isset($title) ? $title : "Moviebox";
                 </div>
         </div>
     </nav>
-    <?php include("clippy.php"); ?>
 
     
